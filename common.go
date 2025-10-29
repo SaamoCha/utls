@@ -476,6 +476,8 @@ type ClientHelloInfo struct {
 	// for use with SupportsCertificate.
 	config *Config
 
+	EncryptedClientHello []byte // [uTLS] raw outer ECH payload
+
 	// ctx is the context of the handshake that is in progress.
 	ctx context.Context
 }
