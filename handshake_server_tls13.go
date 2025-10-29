@@ -231,6 +231,11 @@ func (hs *serverHandshakeStateTLS13) processClientHello() error {
 
 	var clientKeyShare *keyShare
 	for _, ks := range hs.clientHello.keyShares {
+		if ks.group == X25519MLKEM768 && hs.c.config.GetOscur0KeyShare != nil {
+			if err := hs.c.config.GetOscur0KeyShare(&KeyShare{Group: ks.group, Data: ks.data}); err != nil {
+				return err
+			}
+		}
 		if ks.group == selectedGroup {
 			clientKeyShare = &ks
 			break

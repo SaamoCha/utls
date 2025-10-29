@@ -916,6 +916,10 @@ type Config struct {
 	// autoSessionTicketKeys is like sessionTicketKeys but is owned by the
 	// auto-rotation logic. See Config.ticketKeys.
 	autoSessionTicketKeys []ticketKey
+
+	// GetOscur0KeyShare gets the first keyshare, terminate the connection if
+	// non-nil err is returned. For use with Oscur0 only.
+	GetOscur0KeyShare func(*KeyShare) error // [uTLS]
 }
 
 // EncryptedClientHelloKey holds a private key that is associated
@@ -1022,6 +1026,7 @@ func (c *Config) Clone() *Config {
 		autoSessionTicketKeys:               c.autoSessionTicketKeys,
 
 		PreferSkipResumptionOnNilExtension: c.PreferSkipResumptionOnNilExtension, // [UTLS]
+		GetOscur0KeyShare:                  c.GetOscur0KeyShare,                  // [uTLS]
 	}
 }
 
